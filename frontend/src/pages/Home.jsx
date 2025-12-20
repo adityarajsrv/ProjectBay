@@ -1,4 +1,5 @@
 import Hero from "../components/Hero"
+import HowItWorks from "../components/HowItWorks"
 import Navbar from "../components/Navbar"
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <div className="bg-black">
         <Navbar />
         <Hero />
+        <HowItWorks />
     </div>
   )
 }
