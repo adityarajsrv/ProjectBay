@@ -45,7 +45,7 @@ const Footer = () => {
         </motion.div>
         <div className="mt-16 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/10 pt-8">
           <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Mindly. All rights reserved.
+            © {new Date().getFullYear()} PirateBay. All rights reserved.
           </p>
           <div className="flex gap-5 text-gray-400">
             <FaGithub className="w-5 h-5 hover:text-white transition" />
