@@ -69,7 +69,7 @@ const Hero = () => {
                   <div
                     className="w-20 h-20 rounded-full bg-[#0b0f1a] border border-emerald-400/40 
         shadow-[0_0_30px_-5px_rgba(52,211,153,0.35)]
-        flex items-center justify-center text-sm font-medium text-white cursor-pointer"
+        flex items-center justify-center text-sm font-medium text-white cursor-crosshair"
                   >
                     Idea
                   </div>
@@ -82,7 +82,7 @@ const Hero = () => {
                 >
                   <div
                     className="px-6 py-3 rounded-xl bg-[#0b0f1a] border border-indigo-400/30 
-        shadow-[0_0_24px_-6px_rgba(99,102,241,0.3)] text-sm text-white cursor-pointer"
+        shadow-[0_0_24px_-6px_rgba(99,102,241,0.3)] text-sm text-white cursor-crosshair"
                   >
                     Design
                   </div>
@@ -95,7 +95,7 @@ const Hero = () => {
                 >
                   <div
                     className="px-6 py-3 rounded-xl bg-[#0b0f1a] border border-fuchsia-400/30 
-        shadow-[0_0_24px_-6px_rgba(217,70,239,0.3)] text-sm text-white cursor-pointer"
+        shadow-[0_0_24px_-6px_rgba(217,70,239,0.3)] text-sm text-white cursor-crosshair"
                   >
                     Research
                   </div>
@@ -109,7 +109,7 @@ const Hero = () => {
                   <div
                     className="px-6 py-4 rounded-2xl bg-linear-to-br from-[#0b0f1a] to-[#10162b]
         border border-sky-400/40 shadow-[0_0_40px_-10px_rgba(56,189,248,0.4)]
-        text-sm font-medium text-white cursor-pointer"
+        text-sm font-medium text-white cursor-crosshair"
                   >
                     Code & Track
                   </div>
@@ -123,7 +123,7 @@ const Hero = () => {
                   <div
                     className="w-24 h-24 rounded-full bg-[#0b0f1a] border border-pink-400/40
         shadow-[0_0_35px_-8px_rgba(236,72,153,0.35)]
-        flex items-center justify-center text-sm font-medium text-white cursor-pointer"
+        flex items-center justify-center text-sm font-medium text-white cursor-crosshair"
                   >
                     Execution
                   </div>
