@@ -43,8 +43,8 @@ const steps = [
 const HowItWorks = () => {
   return (
     <section className="relative py-32 overflow-hidden bg-[#0b0f1a]">
-      <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-fuchsia-600/10 rounded-full blur-3xl" />
+      <div className="absolute -top-40 left-1/4 w-125 h-125 bg-indigo-600/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-100 h-100 bg-fuchsia-600/10 rounded-full blur-3xl" />
 
       <div
         className="absolute inset-0 opacity-[0.035]"
@@ -72,7 +72,7 @@ const HowItWorks = () => {
           </p>
         </motion.div>
         <div className="relative">
-          <div className="absolute top-[32px] left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-blue-500/30 to-transparent" />
+          <div className="absolute top-8 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-blue-500/30 to-transparent" />
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10 relative z-10">
             {steps.map((step, i) => {
               const Icon = step.icon;

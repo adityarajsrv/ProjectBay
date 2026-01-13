@@ -1,11 +1,30 @@
-import {motion} from "framer-motion";
+/* eslint-disable react/prop-types */
+import { motion } from "framer-motion";
+
+const AnimatedArrow = ({ d, delay = 0, duration = 0.6 }) => {
+  return (
+    <motion.path
+      d={d}
+      stroke="rgba(99,102,241,0.6)"
+      strokeWidth="2.5"
+      filter="blur(1px)"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ pathLength: 1, opacity: 0.4 }}
+      transition={{
+        delay,
+        duration,
+        ease: "easeInOut",
+      }}
+    />
+  );
+};
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen overflow-hidden">
       <div className="absolute inset-0 bg-[#0b0f1a]" />
-      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-3xl" />
-      <div className="absolute top-1/3 -right-40 w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-3xl" />
+      <div className="absolute -top-40 -left-40 w-125 h-125 bg-blue-600/20 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 -right-40 w-100 h-100 bg-purple-600/20 rounded-full blur-3xl" />
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -59,7 +78,7 @@ const Hero = () => {
                 }}
               />
               <div className="absolute -top-24 left-1/3 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" />
-              <div className="relative w-full h-[340px]">
+              <div className="relative w-full h-85">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -78,7 +97,7 @@ const Hero = () => {
                   initial={{ opacity: 0, y: -16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35 }}
-                  className="absolute left-[170px] top-[48px] z-10"
+                  className="absolute left-42.5 top-12 z-10"
                 >
                   <div
                     className="px-6 py-3 rounded-xl bg-[#0b0f1a] border border-indigo-400/30 
@@ -91,7 +110,7 @@ const Hero = () => {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.45 }}
-                  className="absolute left-[170px] bottom-[48px] z-10"
+                  className="absolute left-42.5 bottom-12 z-10"
                 >
                   <div
                     className="px-6 py-3 rounded-xl bg-[#0b0f1a] border border-fuchsia-400/30 
@@ -104,7 +123,7 @@ const Hero = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6 }}
-                  className="absolute left-[360px] top-1/2 -translate-y-1/2 z-10"
+                  className="absolute left-90 top-1/2 -translate-y-1/2 z-10"
                 >
                   <div
                     className="px-6 py-4 rounded-2xl bg-linear-to-br from-[#0b0f1a] to-[#10162b]
@@ -128,7 +147,10 @@ const Hero = () => {
                     Execution
                   </div>
                 </motion.div>
-                <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 600 350"
+                >
                   <defs>
                     <marker
                       id="soft-arrow"
@@ -144,52 +166,12 @@ const Hero = () => {
                       />
                     </marker>
                   </defs>
-                  <line
-                    x1="80"
-                    y1="170"
-                    x2="170"
-                    y2="85"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth="1.5"
-                    markerEnd="url(#soft-arrow)"
-                  />
-                  <line
-                    x1="80"
-                    y1="170"
-                    x2="170"
-                    y2="255"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth="1.5"
-                    markerEnd="url(#soft-arrow)"
-                  />
-                  <line
-                    x1="260"
-                    y1="95"
-                    x2="360"
-                    y2="180"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth="1.5"
-                    markerEnd="url(#soft-arrow)"
-                  />
-                  <line
-                    x1="280"
-                    y1="255"
-                    x2="360"
-                    y2="180"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth="1.5"
-                    markerEnd="url(#soft-arrow)"
-                  />
-                  <line
-                    x1="530"
-                    y1="80"
-                    x2="560"
-                    y2="80"
-                    stroke="rgba(255,255,255,0.25)"
-                    strokeWidth="1.5"
-                    markerEnd="url(#soft-arrow)"
-                    transform="translate(-40, 90)"
-                  />
+
+                  <AnimatedArrow d="M80 170 L170 85" delay={0.6} />
+                  <AnimatedArrow d="M80 170 L170 255" delay={0.8} />
+                  <AnimatedArrow d="M260 95 L360 180" delay={1.2} />
+                  <AnimatedArrow d="M280 255 L360 180" delay={1.4} />
+                  <AnimatedArrow d="M360 180 L540 180" delay={1.9} />
                 </svg>
               </div>
             </motion.div>
