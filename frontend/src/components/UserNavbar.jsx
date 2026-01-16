@@ -3,7 +3,7 @@ import { Bell, ChevronDown } from "lucide-react";
 const UserNavbar = () => {
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-[#0b0f1a]/80 backdrop-blur-xl border-b border-white/5 z-50 flex items-center justify-between px-6">
-      <h1 className="text-xl font-semibold tracking-wide">
+      <h1 className="text-2xl font-semibold tracking-wide">
         Pirate<span className="text-blue-500">Bay</span>
       </h1>
 
