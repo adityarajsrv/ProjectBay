@@ -6,7 +6,7 @@ const LoginVisual = () => (
   <img
     src={loginSvg}
     alt="Login visual"
-    className="w-110"
+    className="w-110 saturate-150"
   />
 );
 
@@ -14,7 +14,7 @@ const SignupVisual = () => (
   <img
     src={signupSvg}
     alt="Signup visual"
-    className="w-110"
+    className="w-110 saturate-100"
   />
 );
 
