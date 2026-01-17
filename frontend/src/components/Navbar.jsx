@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
@@ -16,9 +18,11 @@ const Navbar = () => {
               </button>
             ))}
           </nav>
-          <button className="cursor-pointer bg-blue-500/90 hover:bg-blue-500 text-black px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg shadow-blue-500/20">
-            Login
-          </button>
+          <Link to="/login">
+            <button className="cursor-pointer bg-blue-500/90 hover:bg-blue-500 text-black px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg shadow-blue-500/20">
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </header>
