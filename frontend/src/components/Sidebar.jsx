@@ -13,16 +13,19 @@ import {
 } from "lucide-react";
 import CreateProjectModal from "./CreateProjectModal.jsx";
 
-const Sidebar = () => {
+const Sidebar = ({
+  activeProject,
+  setActiveProject,
+  activeView,
+  setActiveView,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projects, setProjects] = useState([]);
-  const [activeProjectId, setActiveProjectId] = useState(null);
-
-  const activeProject = projects.find(p => p.id === activeProjectId);
 
   const handleCreateProject = (project) => {
-    setProjects(prev => [...prev, project]);
-    setActiveProjectId(project.id);
+    setProjects((prev) => [...prev, project]);
+    setActiveProject(project);
+    setActiveView("overview");
   };
 
   return (
@@ -35,10 +38,15 @@ const Sidebar = () => {
           >
             + Create Project
           </button>
-          <button className="cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-lg bg-white/5 text-white">
-            <LayoutDashboard size={18} />
-            Dashboard
-          </button>
+          <SidebarItem
+            icon={LayoutDashboard}
+            label="Dashboard"
+            active={activeView === "dashboard"}
+            onClick={() => {
+              setActiveProject(null);
+              setActiveView("dashboard");
+            }}
+          />
         </div>
         <div className="flex-1 px-4 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
           <p className="px-3 text-xs uppercase tracking-wider text-white/40 mb-2">
@@ -46,17 +54,19 @@ const Sidebar = () => {
           </p>
           <div className="space-y-1">
             {projects.length === 0 && (
-              <p className="px-3 text-sm text-white/40">
-                No projects yet
-              </p>
+              <p className="px-3 text-sm text-white/40">No projects yet</p>
             )}
-            {projects.map(project => (
+
+            {projects.map((project) => (
               <button
                 key={project.id}
-                onClick={() => setActiveProjectId(project.id)}
+                onClick={() => {
+                  setActiveProject(project);
+                  setActiveView("overview");
+                }}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition cursor-pointer
                   ${
-                    activeProjectId === project.id
+                    activeProject?.id === project.id
                       ? "bg-white/5 text-white"
                       : "text-white/70 hover:bg-white/5 hover:text-white"
                   }`}
@@ -73,18 +83,44 @@ const Sidebar = () => {
               <p className="px-3 text-xs uppercase tracking-wider text-white/40 mb-1">
                 Project: {activeProject.name}
               </p>
-
-              <SidebarItem icon={Map} label="Overview" />
-              <SidebarItem icon={Workflow} label="Roadmap" />
-              <SidebarItem icon={KanbanSquare} label="Execution" />
-              <SidebarItem icon={Activity} label="Insights" />
-              <SidebarItem icon={MessageSquare} label="Chat" />
+              <SidebarItem
+                icon={Map}
+                label="Overview"
+                active={activeView === "overview"}
+                onClick={() => setActiveView("overview")}
+              />
+              <SidebarItem
+                icon={Workflow}
+                label="Roadmap"
+                active={activeView === "roadmap"}
+                onClick={() => setActiveView("roadmap")}
+              />
+              <SidebarItem
+                icon={KanbanSquare}
+                label="Execution"
+                active={activeView === "execution"}
+                onClick={() => setActiveView("execution")}
+              />
+              <SidebarItem
+                icon={Activity}
+                label="Insights"
+                active={activeView === "insights"}
+                onClick={() => setActiveView("insights")}
+              />
+              <SidebarItem
+                icon={MessageSquare}
+                label="Chat"
+                active={activeView === "chat"}
+                onClick={() => setActiveView("chat")}
+              />
             </>
           ) : (
             <>
               <p className="px-3 text-xs uppercase tracking-wider text-white/40 mb-1">
                 Project Tools
               </p>
+              <DisabledItem label="Overview" />
+              <DisabledItem label="Roadmap" />
               <DisabledItem label="Execution" />
               <DisabledItem label="Insights" />
               <DisabledItem label="Chat" />
@@ -111,8 +147,16 @@ const Sidebar = () => {
   );
 };
 
-const SidebarItem = ({ icon: Icon, label }) => (
-  <button className="cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-lg text-white/70 hover:bg-white/5 hover:text-white transition">
+const SidebarItem = ({ icon: Icon, label, active, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-lg transition
+      ${
+        active
+          ? "bg-indigo-500/20 text-white"
+          : "text-white/70 hover:bg-white/5 hover:text-white"
+      }`}
+  >
     <Icon size={18} />
     {label}
   </button>
