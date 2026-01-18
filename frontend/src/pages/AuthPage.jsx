@@ -24,7 +24,7 @@ const AuthPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0B0F1A] px-4">
-      <div className="w-full max-w-5xl h-140 rounded-2xl overflow-hidden border border-white/10
+      <div className="w-full max-w-5xl h-160 rounded-2xl overflow-hidden border border-white/10
         bg-[linear-gradient(180deg,rgba(11,16,32,0.9),rgba(11,15,26,0.95))]
         shadow-[0_0_120px_-40px_rgba(99,102,241,0.35)]
         grid grid-cols-1 md:grid-cols-2">
@@ -40,6 +40,14 @@ const AuthPage = () => {
               : "Turn ideas into structured execution"}
           </p>
           <div className="space-y-4">
+            <div>
+              <label className="text-sm text-white/70">Full Name</label>
+              <input
+                type="text"
+                placeholder="John Doe"
+                className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
+              />
+            </div>
             <div>
               <label className="text-sm text-white/70">Email</label>
               <input
