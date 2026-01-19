@@ -24,7 +24,6 @@ export const signup = async (req, res) => {
   if (exists) return res.status(409).json({ message: "User exists" });
 
   const user = await User.create({ fullName, email, password });
-
   const accessToken = signAccessToken(user._id);
   const refreshToken = signRefreshToken(user._id);
 
@@ -79,7 +78,7 @@ export const refresh = async (req, res) => {
   if (!token) return res.sendStatus(401);
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_REFRESH);
     const user = await User.findById(payload.id).select("+refreshToken");
     if (!user || !(await user.compareRefreshToken(token))) {
       return res.sendStatus(403);
@@ -114,9 +113,13 @@ export const logout = async (req, res) => {
       await User.findByIdAndUpdate(payload.id, { refreshToken: null });
     }
   }
-
   res
     .clearCookie("accessToken", cookieOptions)
     .clearCookie("refreshToken", cookieOptions)
     .sendStatus(204);
+};
+
+export const me = async (req, res) => {
+  const user = await User.findById(req.userId).select("_id fullName email");
+  res.json({user});
 };

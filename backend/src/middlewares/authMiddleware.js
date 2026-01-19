@@ -5,7 +5,7 @@ export const protect = (req, res, next) => {
   if (!token) return res.sendStatus(401);
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.userId = decoded.id;
     next();
   } catch {
