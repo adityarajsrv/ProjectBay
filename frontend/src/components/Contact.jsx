@@ -4,8 +4,8 @@ import { Mail, MessageSquare } from "lucide-react";
 const Contact = () => {
   return (
     <section className="relative py-32 bg-[#0b0f1a] overflow-hidden">
-      <div className="absolute -top-40 left-1/3 w-[520px] h-[520px] bg-blue-600/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-[420px] h-[420px] bg-purple-600/10 rounded-full blur-3xl" />
+      <div className="absolute -top-40 left-1/3 w-130 h-130 bg-blue-600/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-105 h-105 bg-purple-600/10 rounded-full blur-3xl" />
       <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, y: 32 }}
