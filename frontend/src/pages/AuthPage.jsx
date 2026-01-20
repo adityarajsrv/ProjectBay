@@ -60,6 +60,13 @@ const AuthPage = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0B0F1A] px-4">
       <div className="w-full max-w-5xl h-160 rounded-2xl overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(11,16,32,0.9),rgba(11,15,26,0.95))] shadow-[0_0_120px_-40px_rgba(99,102,241,0.35)] grid grid-cols-1 md:grid-cols-2">
@@ -72,7 +79,6 @@ const AuthPage = () => {
               ? "Continue executing your projects"
               : "Turn ideas into structured execution"}
           </p>
-
           <div className="space-y-4">
             {mode === "signup" && (
               <div>
@@ -81,21 +87,21 @@ const AuthPage = () => {
                   name="fullName"
                   value={form.fullName}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
                 />
               </div>
             )}
-
             <div>
               <label className="text-sm text-white/70">Email</label>
               <input
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
               />
             </div>
-
             <div>
               <label className="text-sm text-white/70">Password</label>
               <input
@@ -103,10 +109,10 @@ const AuthPage = () => {
                 type="password"
                 value={form.password}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
               />
             </div>
-
             {mode === "signup" && (
               <div>
                 <label className="text-sm text-white/70">
@@ -117,21 +123,20 @@ const AuthPage = () => {
                   type="password"
                   value={form.confirmPassword}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
                 />
               </div>
             )}
           </div>
-
           {error && <p className="mt-4 text-sm text-rose-400">{error}</p>}
-
           <button
             onClick={handleSubmit}
+            onKeyDown={handleKeyDown}
             className="cursor-pointer mt-6 w-full bg-indigo-500 text-black py-2.5 rounded-lg font-medium hover:bg-indigo-600 transition"
           >
             {mode === "login" ? "Login" : "Create Account"}
           </button>
-
           <p className="mt-6 text-sm text-white/50 text-center">
             {mode === "login" ? (
               <>
