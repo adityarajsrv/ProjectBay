@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loginSvg from "../assets/login.svg";
 import signupSvg from "../assets/signup.svg";
 import { loginUser, signupUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 const LoginVisual = () => (
   <img src={loginSvg} alt="Login visual" className="w-110 saturate-150" />
@@ -20,35 +22,24 @@ const AuthPage = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { refreshUser, setBooted } = useAuth();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
-    if (!form.email.includes("@")) {
-      setError("Enter a valid email");
-      return;
-    }
-
-    if (form.password.length < 8) {
-      setError("Password must be at least 8 characters");
-      return;
-    }
-
-    if (!/[A-Za-z]/.test(form.password) || !/[0-9]/.test(form.password)) {
-      setError("Password must contain letters and numbers");
-      return;
-    }
-
-    if (mode === "signup" && form.password !== form.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+    if (!form.email.includes("@")) return setError("Enter a valid email");
+    if (form.password.length < 8)
+      return setError("Password must be at least 8 characters");
+    if (!/[A-Za-z]/.test(form.password) || !/[0-9]/.test(form.password))
+      return setError("Password must contain letters and numbers");
+    if (mode === "signup" && form.password !== form.confirmPassword)
+      return setError("Passwords do not match");
 
     try {
       setError("");
-
       if (mode === "login") {
         await loginUser({
           email: form.email,
@@ -61,8 +52,9 @@ const AuthPage = () => {
           password: form.password,
         });
       }
-
-      window.location.href = "/dashboard";
+      await refreshUser();
+      setBooted(false);
+      navigate("/boot", { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Authentication failed");
     }
@@ -70,12 +62,7 @@ const AuthPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0B0F1A] px-4">
-      <div
-        className="w-full max-w-5xl h-160 rounded-2xl overflow-hidden border border-white/10
-        bg-[linear-gradient(180deg,rgba(11,16,32,0.9),rgba(11,15,26,0.95))]
-        shadow-[0_0_120px_-40px_rgba(99,102,241,0.35)]
-        grid grid-cols-1 md:grid-cols-2"
-      >
+      <div className="w-full max-w-5xl h-160 rounded-2xl overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(11,16,32,0.9),rgba(11,15,26,0.95))] shadow-[0_0_120px_-40px_rgba(99,102,241,0.35)] grid grid-cols-1 md:grid-cols-2">
         <div className="p-10 flex flex-col justify-center">
           <h1 className="text-3xl font-semibold text-white mb-2">
             {mode === "login" ? "Welcome back" : "Create your account"}
@@ -92,8 +79,6 @@ const AuthPage = () => {
                 <label className="text-sm text-white/70">Full Name</label>
                 <input
                   name="fullName"
-                  type="text"
-                  required
                   value={form.fullName}
                   onChange={handleChange}
                   className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
@@ -105,9 +90,6 @@ const AuthPage = () => {
               <label className="text-sm text-white/70">Email</label>
               <input
                 name="email"
-                type="email"
-                required
-                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                 value={form.email}
                 onChange={handleChange}
                 className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
@@ -119,7 +101,6 @@ const AuthPage = () => {
               <input
                 name="password"
                 type="password"
-                required
                 value={form.password}
                 onChange={handleChange}
                 className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
@@ -134,7 +115,6 @@ const AuthPage = () => {
                 <input
                   name="confirmPassword"
                   type="password"
-                  required
                   value={form.confirmPassword}
                   onChange={handleChange}
                   className="mt-1 w-full rounded-lg bg-[#0F1525] border border-white/10 px-3 py-2 text-white outline-none focus:border-indigo-500"
@@ -158,7 +138,7 @@ const AuthPage = () => {
                 Don&apos;t have an account?{" "}
                 <button
                   onClick={() => setMode("signup")}
-                  className="cursor-pointer underline hover:text-white"
+                  className="underline hover:text-white"
                 >
                   Sign up
                 </button>
@@ -168,7 +148,7 @@ const AuthPage = () => {
                 Already have an account?{" "}
                 <button
                   onClick={() => setMode("login")}
-                  className="cursor-pointer underline hover:text-white"
+                  className="underline hover:text-white"
                 >
                   Sign in
                 </button>
@@ -177,19 +157,10 @@ const AuthPage = () => {
           </p>
         </div>
 
-        <div className="hidden md:flex items-center justify-center relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.06] animate-[gridMove_20s_linear_infinite]"
-            style={{ background: "white", backgroundSize: "32px 32px" }}
-          />
+        <div className="hidden md:flex items-center justify-center relative">
           {mode === "login" ? <LoginVisual /> : <SignupVisual />}
         </div>
       </div>
-
-      <p className="absolute bottom-6 text-xs text-white/40 text-center">
-        By continuing, you agree to our <span className="underline">Terms</span>{" "}
-        and <span className="underline">Privacy Policy</span>.
-      </p>
     </div>
   );
 };

@@ -2,20 +2,22 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import DashboardPage from "./pages/DashboardPage";
 import AuthPage from "./pages/AuthPage";
-import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import BootPage from "./pages/BootPage";
 
 const App = () => {
-  const {user} = useAuth();
-
   return (
-      <Routes>
-        <Route
-        path="/login"
-        element={user ? <Navigate to="/dashboard" replace /> : <AuthPage />}
-        />
-        <Route path="/" element={<Home />} />
-        <Route
+    <Routes>
+      <Route path="/login" element={<AuthPage />} />
+      <Route
+        path="/boot"
+        element={
+          <ProtectedRoute>
+            <BootPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
@@ -23,8 +25,9 @@ const App = () => {
           </ProtectedRoute>
         }
       />
-        <Route path="/login" element={<AuthPage />} />
-      </Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
   );
 };
 
