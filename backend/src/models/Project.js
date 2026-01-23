@@ -2,49 +2,55 @@ import mongoose from "mongoose"
 
 const projectMemberSchema = new mongoose.Schema(
     {
-        user:{
-            type: Schema.Types.ObjectId,
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,
         },
-        role:{
+        role: {
             type: String,
             enum: ["OWNER", "ADMIN", "MEMBER", "VIEWER"],
             default: "MEMBER"
         },
-        joinedAt:{
+        joinedAt: {
             type: Date,
             default: Date.now
         },
     },
-    {_id: false}
+    { _id: false }
 );
 
 const projectSchema = new mongoose.Schema(
     {
-        name:{
+        name: {
             type: String,
             required: true,
             trim: true,
             minLength: 3,
             maxLength: 20
         },
-        description:{
+        description: {
             type: String,
             trim: true,
             maxLength: 1000
         },
-        members:{
+        owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+            index: true,
+        },
+        members: {
             type: [projectMemberSchema],
             default: []
         },
-        status:{
+        status: {
             type: String,
             enum: ["ACTIVE", "COMPLETED", "BLOCKED", "ARCHIVED"],
             default: "ACTIVE",
             index: true
         },
-        createdAt:{
+        createdAt: {
             type: Date,
             default: Date.now,
             immutable: true
@@ -57,8 +63,8 @@ const projectSchema = new mongoose.Schema(
 );
 
 projectSchema.index(
-    {_id: 1, "members.user": 1},
-    {unique: true, sparse: true}
+    { _id: 1, "members.user": 1 },
+    { unique: true, sparse: true }
 )
 
 export default mongoose.model("Project", projectSchema);
