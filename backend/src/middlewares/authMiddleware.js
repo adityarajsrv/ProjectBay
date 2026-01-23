@@ -1,14 +1,28 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-export const protect = (req, res, next) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.sendStatus(401);
-
+export const protect = async (req, res, next) => {
   try {
+    const token = req.cookies?.accessToken;
+
+    if (!token) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.userId = decoded.id;
+    const user = await User.findById(decoded.id).select("_id email");
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    req.user = {
+      id: user._id.toString(),
+      email: user.email,
+    };
+
     next();
-  } catch {
-    res.sendStatus(403);
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
