@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const refreshUser = async () => {
+    setLoading(true);
     try {
       const res = await api.get("/auth/me");
       setUser(res.data.user);

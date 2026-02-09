@@ -14,7 +14,7 @@ const signRefreshToken = (id) =>
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: "lax",
 };
 
 export const signup = async (req, res) => {
@@ -120,6 +120,6 @@ export const logout = async (req, res) => {
 };
 
 export const me = async (req, res) => {
-  const user = await User.findById(req.userId).select("_id fullName email");
+  const user = await User.findById(req.user.id).select("_id fullName email");
   res.json({user});
 };
